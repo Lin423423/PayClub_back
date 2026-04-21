@@ -2,64 +2,100 @@
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PayClub 管理後台</title>
+<title>管理後台 — PayClub</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0f1117;--surface:#1a1d27;--card:#22263a;--accent:#4f6ef7;--green:#16a34a;--red:#dc2626;--orange:#d97706;--text:#f0f0ff;--text2:#9ca3af;--border:rgba(255,255,255,0.08);}
+:root{--bg:#f8f9fc;--white:#ffffff;--surface:#f3f4f6;--card:#ffffff;--accent:#4f6ef7;--accent-dark:#3a56d4;--accent-light:#eef2ff;--green:#16a34a;--green-light:#dcfce7;--red:#dc2626;--red-light:#fee2e2;--orange:#d97706;--orange-light:#fef3c7;--text:#0f1117;--text2:#6b7280;--text3:#9ca3af;--border:#e5e7eb;--border2:#d1d5db;--shadow:0 1px 3px rgba(0,0,0,0.1);--radius:12px;}
 *{margin:0;padding:0;box-sizing:border-box;}
 body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC','Plus Jakarta Sans',sans-serif;min-height:100vh;}
-.admin-login{max-width:400px;margin:80px auto;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:36px;}
-.admin-login h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.4rem;font-weight:800;margin-bottom:6px;}
-.admin-login p{color:var(--text2);font-size:0.85rem;margin-bottom:24px;}
-.a-input{width:100%;background:var(--surface);border:1.5px solid var(--border);border-radius:9px;padding:11px 14px;color:var(--text);font-size:0.9rem;font-family:'Noto Sans TC',sans-serif;outline:none;margin-bottom:12px;}
-.a-input:focus{border-color:var(--accent);}
-.a-btn{width:100%;padding:12px;background:var(--accent);color:#fff;border:none;border-radius:9px;font-size:0.95rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;}
-.a-btn:hover{background:#3a56d4;}
-.a-err{color:#f87171;font-size:0.8rem;margin-top:8px;display:none;}
-.admin-nav{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
-.admin-logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.1rem;color:var(--accent);display:flex;align-items:center;gap:8px;}
-.admin-logo-badge{background:rgba(220,38,38,0.2);color:#f87171;font-size:0.68rem;font-weight:700;padding:2px 8px;border-radius:100px;letter-spacing:0.06em;}
-.admin-out{background:rgba(220,38,38,0.15);border:1px solid rgba(220,38,38,0.3);color:#f87171;padding:6px 14px;border-radius:7px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;}
-.content{max-width:1100px;margin:0 auto;padding:28px 20px;}
-.section-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.1rem;font-weight:800;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
-.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px;}
-.stat-box{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 18px;}
-.stat-box-label{font-size:0.7rem;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px;}
-.stat-box-val{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.7rem;font-weight:800;letter-spacing:-0.03em;}
-.table-card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:24px;}
-.table-header{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
-.table-title{font-size:0.9rem;font-weight:700;}
-.search-input{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:7px 12px;color:var(--text);font-size:0.83rem;font-family:'Noto Sans TC',sans-serif;outline:none;width:200px;}
-.search-input:focus{border-color:var(--accent);}
+
+/* Admin Nav */
+.admin-nav{background:var(--white);border-bottom:1px solid var(--border);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:var(--shadow);}
+.admin-logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.2rem;color:var(--accent);display:flex;align-items:center;gap:8px;}
+.admin-badge{background:var(--red-light);color:var(--red);font-size:0.68rem;font-weight:700;padding:3px 10px;border-radius:100px;letter-spacing:0.06em;}
+.admin-actions{display:flex;gap:10px;align-items:center;}
+.nav-btn{background:var(--surface);border:1px solid var(--border);color:var(--text2);padding:7px 16px;border-radius:8px;font-size:0.85rem;font-weight:600;cursor:pointer;font-family:'Noto Sans TC',sans-serif;transition:all 0.15s;}
+.nav-btn:hover{background:var(--border);border-color:var(--border2);}
+.nav-btn-danger{background:var(--red-light);border-color:var(--red);color:var(--red);}
+.nav-btn-danger:hover{background:var(--red);color:#fff;}
+
+/* Content */
+.content{max-width:1400px;margin:0 auto;padding:32px 28px;}
+.page-header{margin-bottom:28px;}
+.page-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.8rem;font-weight:800;margin-bottom:6px;}
+.page-desc{color:var(--text2);font-size:0.95rem;}
+
+/* Stats Grid */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px;}
+.stat-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:22px 24px;transition:all 0.2s;}
+.stat-card:hover{box-shadow:0 4px 12px rgba(0,0,0,0.08);}
+.stat-label{font-size:0.75rem;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px;}
+.stat-value{font-family:'Plus Jakarta Sans',sans-serif;font-size:2rem;font-weight:800;letter-spacing:-0.03em;margin-bottom:4px;}
+.stat-sub{font-size:0.8rem;color:var(--text2);}
+
+/* Tabs */
+.admin-tabs{display:flex;gap:8px;margin-bottom:24px;background:var(--white);padding:8px;border-radius:12px;border:1px solid var(--border);}
+.admin-tab{flex:1;padding:12px 20px;border:none;background:transparent;color:var(--text2);font-size:0.9rem;font-weight:600;cursor:pointer;border-radius:8px;transition:all 0.15s;font-family:'Noto Sans TC',sans-serif;}
+.admin-tab.active{background:var(--accent);color:#fff;}
+.admin-tab:hover:not(.active){background:var(--surface);}
+
+/* Table Card */
+.table-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:24px;}
+.table-header{padding:18px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.table-title{font-size:1rem;font-weight:700;}
+.search-box{display:flex;gap:8px;}
+.search-input{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 14px;color:var(--text);font-size:0.88rem;font-family:'Noto Sans TC',sans-serif;outline:none;width:240px;transition:all 0.15s;}
+.search-input:focus{border-color:var(--accent);background:var(--white);}
+
+/* Table */
 table{width:100%;border-collapse:collapse;}
-thead th{padding:10px 18px;font-size:0.68rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.05em;text-align:left;background:rgba(255,255,255,0.02);border-bottom:1px solid var(--border);}
-tbody tr:hover{background:rgba(255,255,255,0.02);}
-tbody td{padding:12px 18px;font-size:0.84rem;border-bottom:1px solid var(--border);vertical-align:middle;}
+thead th{padding:14px 24px;font-size:0.72rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.05em;text-align:left;background:var(--surface);border-bottom:1px solid var(--border);}
+tbody tr{transition:all 0.15s;}
+tbody tr:hover{background:var(--surface);}
+tbody td{padding:16px 24px;font-size:0.88rem;border-bottom:1px solid var(--border);vertical-align:middle;}
 tbody tr:last-child td{border-bottom:none;}
-.badge{display:inline-flex;align-items:center;padding:2px 9px;border-radius:100px;font-size:0.68rem;font-weight:700;}
-.badge-green{background:rgba(22,163,74,0.2);color:#4ade80;}
-.badge-blue{background:rgba(79,110,247,0.2);color:#818cf8;}
-.badge-orange{background:rgba(217,119,6,0.2);color:#fbbf24;}
-.badge-red{background:rgba(220,38,38,0.2);color:#f87171;}
-.badge-gray{background:rgba(255,255,255,0.08);color:var(--text2);}
-.badge-demo{background:rgba(217,119,6,0.2);color:#fbbf24;}
-.del-btn{background:rgba(220,38,38,0.15);border:1px solid rgba(220,38,38,0.3);color:#f87171;padding:4px 10px;border-radius:6px;font-size:0.72rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;}
-.del-btn:hover{background:rgba(220,38,38,0.25);}
-.refresh-btn{background:rgba(255,255,255,0.06);border:1px solid var(--border);color:var(--text2);padding:6px 14px;border-radius:7px;font-size:0.8rem;font-weight:600;cursor:pointer;font-family:'Noto Sans TC',sans-serif;}
-.refresh-btn:hover{background:rgba(255,255,255,0.1);}
-.log-row{display:flex;align-items:center;gap:12px;padding:9px 18px;border-bottom:1px solid var(--border);font-size:0.82rem;}
-.log-row:last-child{border-bottom:none;}
-.log-time{color:var(--text2);font-size:0.75rem;min-width:140px;flex-shrink:0;}
-.log-action{font-weight:600;}
-.log-user{color:var(--accent);font-size:0.8rem;}
-.empty-log{text-align:center;padding:32px;color:var(--text2);font-size:0.85rem;}
-.toast{position:fixed;bottom:20px;right:20px;background:#22263a;border:1px solid var(--border);color:var(--text);border-radius:10px;padding:11px 16px;font-size:0.84rem;transform:translateY(60px);opacity:0;transition:all 0.3s;z-index:9999;}
+
+/* Badges */
+.badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:100px;font-size:0.72rem;font-weight:700;}
+.badge-green{background:var(--green-light);color:var(--green);}
+.badge-blue{background:var(--accent-light);color:var(--accent);}
+.badge-orange{background:var(--orange-light);color:var(--orange);}
+.badge-red{background:var(--red-light);color:var(--red);}
+.badge-gray{background:var(--surface);color:var(--text3);}
+
+/* Buttons */
+.btn-action{background:var(--accent-light);border:1px solid var(--accent);color:var(--accent);padding:6px 14px;border-radius:7px;font-size:0.78rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;transition:all 0.15s;}
+.btn-action:hover{background:var(--accent);color:#fff;}
+.btn-danger{background:var(--red-light);border:1px solid var(--red);color:var(--red);}
+.btn-danger:hover{background:var(--red);color:#fff;}
+
+/* Empty State */
+.empty-state{text-align:center;padding:64px 24px;color:var(--text3);}
+.empty-icon{font-size:3rem;margin-bottom:16px;}
+.empty-text{font-size:0.95rem;margin-bottom:8px;}
+
+/* Login Screen */
+.admin-login{max-width:420px;margin:80px auto;background:var(--white);border:1px solid var(--border);border-radius:16px;padding:40px;box-shadow:0 4px 24px rgba(0,0,0,0.08);}
+.admin-login h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.6rem;font-weight:800;margin-bottom:8px;}
+.admin-login p{color:var(--text2);font-size:0.9rem;margin-bottom:28px;}
+.a-input{width:100%;background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:12px 16px;color:var(--text);font-size:0.92rem;font-family:'Noto Sans TC',sans-serif;outline:none;margin-bottom:14px;transition:all 0.15s;}
+.a-input:focus{border-color:var(--accent);background:var(--white);}
+.a-btn{width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;transition:all 0.15s;}
+.a-btn:hover{background:var(--accent-dark);}
+.a-err{color:var(--red);font-size:0.85rem;margin-top:10px;display:none;}
+.a-hint{margin-top:18px;font-size:0.8rem;color:var(--text3);text-align:center;}
+
+/* Toast */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--white);border:1px solid var(--border);color:var(--text);border-radius:12px;padding:14px 20px;font-size:0.88rem;box-shadow:0 4px 16px rgba(0,0,0,0.12);transform:translateY(80px);opacity:0;transition:all 0.3s;z-index:9999;}
 .toast.show{transform:translateY(0);opacity:1;}
-@media(max-width:768px){.stats-row{grid-template-columns:1fr 1fr;}.search-input{width:140px;}.content{padding:20px 14px;}thead th,tbody td{padding:8px 12px;font-size:0.76rem;}}
+
+@media(max-width:1024px){.stats-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:640px){.stats-grid{grid-template-columns:1fr;}.content{padding:24px 16px;}.search-input{width:160px;}}
 </style>
 </head>
 <body>
 
+<!-- Login Screen -->
 <div id="loginScreen">
   <div class="admin-login">
     <h2>🔐 管理後台</h2>
@@ -68,201 +104,387 @@ tbody tr:last-child td{border-bottom:none;}
     <input type="password" id="adminPwd" class="a-input" placeholder="管理員密碼" onkeydown="if(event.key==='Enter')adminLogin()">
     <button class="a-btn" onclick="adminLogin()">登入管理後台</button>
     <div class="a-err" id="adminErr">帳號或密碼錯誤</div>
-    <div style="margin-top:16px;font-size:0.76rem;color:var(--text2);text-align:center;">預設：admin / payclub2025</div>
+    <div class="a-hint">預設帳號：admin / 密碼：payclub2025</div>
   </div>
 </div>
 
+<!-- Admin Dashboard -->
 <div id="adminDash" style="display:none">
   <nav class="admin-nav">
-    <div class="admin-logo">PayClub <span class="admin-logo-badge">ADMIN</span></div>
-    <div style="display:flex;gap:8px;align-items:center;">
-      <button class="refresh-btn" onclick="renderAll()">🔄 重新整理</button>
-      <button class="admin-out" onclick="adminLogout()">登出</button>
+    <div class="admin-logo">PayClub <span class="admin-badge">ADMIN</span></div>
+    <div class="admin-actions">
+      <button class="nav-btn" onclick="renderAll()">🔄 重新整理</button>
+      <button class="nav-btn nav-btn-danger" onclick="adminLogout()">登出</button>
     </div>
   </nav>
+
   <div class="content">
-    <div class="stats-row">
-      <div class="stat-box"><div class="stat-box-label">總註冊用戶</div><div class="stat-box-val" id="aTotal" style="color:var(--accent)">0</div></div>
-      <div class="stat-box"><div class="stat-box-label">一般帳號</div><div class="stat-box-val" id="aRegular" style="color:#4ade80">0</div></div>
-      <div class="stat-box"><div class="stat-box-label">DEMO 用戶</div><div class="stat-box-val" id="aDemo" style="color:#fbbf24">0</div></div>
-      <div class="stat-box"><div class="stat-box-label">活動日誌筆數</div><div class="stat-box-val" id="aLogs" style="color:#a78bfa">0</div></div>
+    <div class="page-header">
+      <div class="page-title">系統管理總覽</div>
+      <div class="page-desc">管理所有用戶、活動與系統設定</div>
     </div>
 
-    <div class="section-title">👥 用戶列表</div>
-    <div class="table-card">
+    <!-- Statistics -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">總用戶數</div>
+        <div class="stat-value" id="totalUsers">0</div>
+        <div class="stat-sub">註冊用戶</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">總活動數</div>
+        <div class="stat-value" id="totalEvents">0</div>
+        <div class="stat-sub">所有活動</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">活躍活動</div>
+        <div class="stat-value" id="activeEvents" style="color:var(--green)">0</div>
+        <div class="stat-sub">進行中</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">總收款金額</div>
+        <div class="stat-value" id="totalRevenue" style="color:var(--accent)">$0</div>
+        <div class="stat-sub">所有活動合計</div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="admin-tabs">
+      <button class="admin-tab active" onclick="switchTab('users',this)">👥 用戶管理</button>
+      <button class="admin-tab" onclick="switchTab('events',this)">📋 活動管理</button>
+      <button class="admin-tab" onclick="switchTab('blocked',this)">🚫 封鎖名單</button>
+      <button class="admin-tab" onclick="switchTab('logs',this)">📊 系統日誌</button>
+    </div>
+
+    <!-- Users Table -->
+    <div id="usersTab" class="table-card">
       <div class="table-header">
-        <div class="table-title">所有登入用戶</div>
-        <input type="text" class="search-input" placeholder="搜尋名稱或 Email" oninput="filterUsers(this.value)">
+        <div class="table-title">用戶列表</div>
+        <div class="search-box">
+          <input type="text" class="search-input" placeholder="搜尋 Email..." id="userSearch" oninput="filterUsers()">
+        </div>
       </div>
       <table>
-        <thead><tr><th>姓名</th><th>Email</th><th>成員類別</th><th>類型</th><th>首次登入</th><th>最後登入</th><th>登入次數</th><th>活動數</th><th>操作</th></tr></thead>
-        <tbody id="usersBody"></tbody>
+        <thead>
+          <tr>
+            <th>姓名</th>
+            <th>Email</th>
+            <th>建立的活動</th>
+            <th>狀態</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody id="usersList"></tbody>
       </table>
     </div>
 
-    <div class="section-title">🔑 已註冊帳號</div>
-    <div class="table-card">
-      <div class="table-header"><div class="table-title">可登入帳號（Email + 密碼）</div></div>
+    <!-- Events Table -->
+    <div id="eventsTab" class="table-card" style="display:none">
+      <div class="table-header">
+        <div class="table-title">活動列表</div>
+        <div class="search-box">
+          <input type="text" class="search-input" placeholder="搜尋活動..." id="eventSearch" oninput="filterEvents()">
+        </div>
+      </div>
       <table>
-        <thead><tr><th>姓名</th><th>Email</th><th>成員類別</th><th>操作</th></tr></thead>
-        <tbody id="accountsBody"></tbody>
+        <thead>
+          <tr>
+            <th>活動名稱</th>
+            <th>發起人</th>
+            <th>成員數</th>
+            <th>已繳費</th>
+            <th>截止日期</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody id="eventsList"></tbody>
       </table>
     </div>
 
-    <div class="section-title">🚫 封鎖名單</div>
-    <div class="table-card" style="margin-bottom:24px">
-      <div class="table-header"><div class="table-title">已封鎖帳號（無法登入）</div></div>
+    <!-- Blocked List -->
+    <div id="blockedTab" class="table-card" style="display:none">
+      <div class="table-header">
+        <div class="table-title">封鎖名單總覽</div>
+      </div>
       <div id="blockedList"></div>
     </div>
 
-    <div class="section-title">📋 活動日誌</div>
-    <div class="table-card">
+    <!-- Logs -->
+    <div id="logsTab" class="table-card" style="display:none">
       <div class="table-header">
-        <div class="table-title">最近 50 筆操作記錄</div>
-        <button class="refresh-btn" onclick="clearLogs()">清除日誌</button>
+        <div class="table-title">系統活動日誌</div>
       </div>
-      <div id="logList"></div>
+      <div id="logsList" style="max-height:500px;overflow-y:auto;"></div>
     </div>
   </div>
 </div>
+
 <div class="toast" id="toast"></div>
 
 <script>
-// Role labels in Chinese
-const ROLE_LABELS = {admin:'管理者', observer:'觀察者', payer:'繳費者', leader:'管理者', member:'成員'};
-const ROLE_BADGE_CLASS = {admin:'badge-green', observer:'badge-gray', payer:'badge-blue', leader:'badge-green', member:'badge-gray'};
+const ADMIN_CRED = {user:'admin',pwd:'payclub2025'};
+let isLoggedIn = false;
 
-function getAdminCreds(){ const raw=localStorage.getItem('pc_admin_credentials'); return raw?JSON.parse(raw):{username:'admin',password:'payclub2025'}; }
 function adminLogin(){
-  const u=document.getElementById('adminUser').value.trim(),p=document.getElementById('adminPwd').value;
-  const creds=getAdminCreds();
-  if(u===creds.username&&p===creds.password){
-    sessionStorage.setItem('pc_admin_auth','1');
-    document.getElementById('loginScreen').style.display='none';
-    document.getElementById('adminDash').style.display='block';
+  const u = document.getElementById('adminUser').value.trim();
+  const p = document.getElementById('adminPwd').value;
+  if(u === ADMIN_CRED.user && p === ADMIN_CRED.pwd){
+    isLoggedIn = true;
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('adminDash').style.display = 'block';
     renderAll();
   } else {
-    document.getElementById('adminErr').style.display='block';
-    setTimeout(()=>document.getElementById('adminErr').style.display='none',2000);
+    document.getElementById('adminErr').style.display = 'block';
   }
 }
-function adminLogout(){ sessionStorage.removeItem('pc_admin_auth'); location.reload(); }
-if(sessionStorage.getItem('pc_admin_auth')==='1'){
-  document.getElementById('loginScreen').style.display='none';
-  document.getElementById('adminDash').style.display='block';
+
+function adminLogout(){
+  if(confirm('確定要登出管理後台？')){
+    isLoggedIn = false;
+    document.getElementById('loginScreen').style.display = 'block';
+    document.getElementById('adminDash').style.display = 'none';
+    document.getElementById('adminUser').value = '';
+    document.getElementById('adminPwd').value = '';
+  }
 }
 
-function getRegistry(){ return JSON.parse(localStorage.getItem('pc_user_registry')||'[]'); }
-function getLogs(){ return JSON.parse(localStorage.getItem('pc_activity_log')||'[]'); }
-function getAccounts(){ return JSON.parse(localStorage.getItem('pc_users')||'[]'); }
-function getUserEvents(email){ return JSON.parse(localStorage.getItem('pc_events__'+email)||'[]'); }
-let allUsers=[];
+function switchTab(tab, btn){
+  document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('usersTab').style.display = tab === 'users' ? 'block' : 'none';
+  document.getElementById('eventsTab').style.display = tab === 'events' ? 'block' : 'none';
+  document.getElementById('blockedTab').style.display = tab === 'blocked' ? 'block' : 'none';
+  document.getElementById('logsTab').style.display = tab === 'logs' ? 'block' : 'none';
+}
 
 function renderAll(){
-  allUsers=getRegistry();
-  const logs=getLogs(),accounts=getAccounts();
-  document.getElementById('aTotal').textContent=allUsers.length;
-  document.getElementById('aRegular').textContent=allUsers.filter(u=>!u.isDemo).length;
-  document.getElementById('aDemo').textContent=allUsers.filter(u=>u.isDemo).length;
-  document.getElementById('aLogs').textContent=logs.length;
-  renderUsers(allUsers); renderAccounts(accounts); renderLogs(logs.slice(0,50)); renderBlocked();
+  renderStats();
+  renderUsers();
+  renderEvents();
+  renderBlocked();
+  renderLogs();
 }
 
-function roleBadge(role){
-  const label = ROLE_LABELS[role]||role;
-  const cls = ROLE_BADGE_CLASS[role]||'badge-gray';
-  return `<span class="badge ${cls}">${label}</span>`;
+function renderStats(){
+  // 統計用戶
+  const users = JSON.parse(localStorage.getItem('pc_users') || '[]');
+  document.getElementById('totalUsers').textContent = users.length;
+
+  // 統計活動
+  let totalEvents = 0;
+  let activeEvents = 0;
+  let totalRevenue = 0;
+
+  for(let i = 0; i < localStorage.length; i++){
+    const key = localStorage.key(i);
+    if(key && key.startsWith('pc_events__')){
+      try{
+        const events = JSON.parse(localStorage.getItem(key) || '[]');
+        totalEvents += events.length;
+        events.forEach(e => {
+          const today = new Date().toISOString().split('T')[0];
+          if(e.deadline >= today) activeEvents++;
+          
+          // 計算總收款
+          (e.members || []).forEach(m => {
+            if(m.status === 'paid'){
+              const amt = m.customAmount !== null ? m.customAmount : (Number(e.amount) || 0);
+              totalRevenue += amt;
+            }
+          });
+        });
+      }catch(e){}
+    }
+  }
+
+  document.getElementById('totalEvents').textContent = totalEvents;
+  document.getElementById('activeEvents').textContent = activeEvents;
+  document.getElementById('totalRevenue').textContent = '$' + totalRevenue.toLocaleString();
 }
 
-function renderUsers(users){
-  const tbody=document.getElementById('usersBody');
-  if(!users.length){tbody.innerHTML='<tr><td colspan="9" style="text-align:center;padding:24px;color:var(--text2)">尚無用戶資料</td></tr>';return;}
-  tbody.innerHTML=users.map(u=>{
-    const evts=getUserEvents(u.email);
-    const typeBadge=u.isDemo?'<span class="badge badge-demo">Demo</span>':'<span class="badge badge-blue">一般</span>';
-    const created=u.createdAt?new Date(u.createdAt).toLocaleString('zh-TW',{dateStyle:'short',timeStyle:'short'}):'—';
-    const last=u.lastLogin?new Date(u.lastLogin).toLocaleString('zh-TW',{dateStyle:'short',timeStyle:'short'}):'—';
+function renderUsers(){
+  const users = JSON.parse(localStorage.getItem('pc_users') || '[]');
+  const list = document.getElementById('usersList');
+
+  if(users.length === 0){
+    list.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:40px;color:var(--text3)">目前沒有註冊用戶</td></tr>';
+    return;
+  }
+
+  list.innerHTML = users.map(u => {
+    const key = 'pc_events__' + u.email;
+    const events = JSON.parse(localStorage.getItem(key) || '[]');
+    const blocked = JSON.parse(localStorage.getItem('pc_blocked_emails') || '[]');
+    const isBlocked = blocked.includes(u.email);
+
     return `<tr>
-      <td style="font-weight:600">${u.name}</td>
-      <td style="color:var(--text2);font-size:0.78rem">${u.email}</td>
-      <td>${roleBadge(u.role)}</td>
-      <td>${typeBadge}</td>
-      <td style="color:var(--text2);font-size:0.76rem">${created}</td>
-      <td style="color:var(--text2);font-size:0.76rem">${last}</td>
-      <td style="font-weight:700;color:var(--accent)">${u.loginCount||1}</td>
-      <td>${evts.length}</td>
-      <td><button class="del-btn" onclick="deleteUser('${u.email}')">刪除</button></td>
+      <td><strong>${u.name}</strong></td>
+      <td style="color:var(--text2)">${u.email}</td>
+      <td>${events.length} 個</td>
+      <td><span class="badge ${isBlocked?'badge-red':'badge-green'}">${isBlocked?'已停用':'正常'}</span></td>
+      <td>
+        ${isBlocked 
+          ? `<button class="btn-action" onclick="unblockUser('${u.email}')">解除停用</button>`
+          : `<button class="btn-danger" onclick="blockUser('${u.email}')">停用帳號</button>`
+        }
+      </td>
     </tr>`;
   }).join('');
 }
 
-function filterUsers(q){ if(!q){renderUsers(allUsers);return;} renderUsers(allUsers.filter(u=>u.name.includes(q)||u.email.includes(q))); }
+function renderEvents(){
+  const list = document.getElementById('eventsList');
+  const allEvents = [];
 
-function renderAccounts(accounts){
-  const tbody=document.getElementById('accountsBody');
-  if(!accounts.length){tbody.innerHTML='<tr><td colspan="4" style="text-align:center;padding:24px;color:var(--text2)">尚無已註冊帳號</td></tr>';return;}
-  tbody.innerHTML=accounts.map((a,i)=>`<tr>
-    <td style="font-weight:600">${a.name}</td>
-    <td style="color:var(--text2);font-size:0.78rem">${a.email}</td>
-    <td>${roleBadge(a.role)}</td>
-    <td><button class="del-btn" onclick="deleteAccount(${i})">刪除帳號</button></td>
-  </tr>`).join('');
-}
+  for(let i = 0; i < localStorage.length; i++){
+    const key = localStorage.key(i);
+    if(key && key.startsWith('pc_events__')){
+      try{
+        const events = JSON.parse(localStorage.getItem(key) || '[]');
+        const ownerEmail = key.replace('pc_events__', '');
+        events.forEach(e => {
+          allEvents.push({...e, _ownerEmail: ownerEmail, _key: key});
+        });
+      }catch(e){}
+    }
+  }
 
-const ACTION_LABELS={login:'登入',logout:'登出',logout_demo:'Demo 登出（資料清除）',view_dashboard:'查看儀表板'};
-function renderLogs(logs){
-  const el=document.getElementById('logList');
-  if(!logs.length){el.innerHTML='<div class="empty-log">尚無活動記錄</div>';return;}
-  el.innerHTML=logs.map(l=>{
-    const t=new Date(l.time).toLocaleString('zh-TW',{dateStyle:'short',timeStyle:'medium'});
-    const c=l.action.includes('logout')?'#f87171':l.action==='login'?'#4ade80':'var(--text)';
-    return `<div class="log-row"><div class="log-time">${t}</div><div class="log-action" style="color:${c}">${ACTION_LABELS[l.action]||l.action}</div><div class="log-user">${l.name} (${l.email})</div></div>`;
+  if(allEvents.length === 0){
+    list.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:40px;color:var(--text3)">目前沒有活動</td></tr>';
+    return;
+  }
+
+  list.innerHTML = allEvents.map(e => {
+    const members = e.members || [];
+    const paidCount = members.filter(m => m.status === 'paid').length;
+    const today = new Date().toISOString().split('T')[0];
+    const isActive = e.deadline >= today;
+
+    return `<tr>
+      <td><strong>${e.title}</strong></td>
+      <td style="color:var(--text2)">${e._ownerEmail}</td>
+      <td>${members.length} 人</td>
+      <td><span class="badge badge-green">${paidCount} / ${members.length}</span></td>
+      <td>${e.deadline}</td>
+      <td>
+        <button class="btn-action" onclick="viewEvent('${e.id}','${e._ownerEmail}')">查看詳情</button>
+      </td>
+    </tr>`;
   }).join('');
 }
 
 function renderBlocked(){
-  const blocked=JSON.parse(localStorage.getItem('pc_blocked_emails')||'[]');
-  const el=document.getElementById('blockedList');
-  if(!el)return;
-  if(!blocked.length){el.innerHTML='<div style="padding:16px;text-align:center;color:var(--text2);font-size:0.84rem;">目前沒有封鎖的帳號</div>';return;}
-  el.innerHTML=blocked.map(email=>`
-    <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 20px;border-bottom:1px solid var(--border);font-size:0.84rem;">
-      <div><span style="font-weight:600">${email}</span> <span class="badge badge-red">已封鎖</span></div>
-      <button class="del-btn" style="background:rgba(22,163,74,0.15);border-color:#4ade80;color:#4ade80;" onclick="unblockEmail('${email}')">解除封鎖</button>
-    </div>`).join('');
+  const list = document.getElementById('blockedList');
+  const allBlocked = [];
+
+  for(let i = 0; i < localStorage.length; i++){
+    const key = localStorage.key(i);
+    if(key && key.startsWith('pc_blocked__')){
+      try{
+        const blocked = JSON.parse(localStorage.getItem(key) || '[]');
+        const eventId = key.replace('pc_blocked__', '');
+        blocked.forEach(b => {
+          allBlocked.push({...b, eventId});
+        });
+      }catch(e){}
+    }
+  }
+
+  if(allBlocked.length === 0){
+    list.innerHTML = '<div class="empty-state"><div class="empty-icon">🎉</div><div class="empty-text">目前沒有封鎖記錄</div></div>';
+    return;
+  }
+
+  list.innerHTML = allBlocked.map(b => {
+    const time = new Date(b.blockedAt).toLocaleString('zh-TW');
+    return `<div style="padding:14px 24px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+      <div>
+        <div style="font-weight:600;">${b.name || b.email}</div>
+        <div style="font-size:0.8rem;color:var(--text3);margin-top:2px;">活動 ID: ${b.eventId} • 封鎖時間: ${time}</div>
+      </div>
+      <button class="btn-action" onclick="removeBlockRecord('${b.eventId}','${b.email}')">移除記錄</button>
+    </div>`;
+  }).join('');
 }
 
-function deleteUser(email){
-  if(!confirm('確定刪除用戶「'+email+'」的所有資料？'))return;
-  localStorage.setItem('pc_user_registry',JSON.stringify(getRegistry().filter(u=>u.email!==email)));
-  localStorage.removeItem('pc_events__'+email);
-  localStorage.setItem('pc_users',JSON.stringify(getAccounts().filter(u=>u.email!==email)));
-  const blocked=JSON.parse(localStorage.getItem('pc_blocked_emails')||'[]');
-  if(!blocked.includes(email))blocked.push(email);
-  localStorage.setItem('pc_blocked_emails',JSON.stringify(blocked));
-  const logs=getLogs();logs.unshift({email:'admin',name:'管理員',action:'delete_user ('+email+')',time:new Date().toISOString()});
-  localStorage.setItem('pc_activity_log',JSON.stringify(logs));
-  showToast('已刪除並封鎖 '+email);renderAll();
+function renderLogs(){
+  const logs = JSON.parse(localStorage.getItem('pc_activity_log') || '[]');
+  const list = document.getElementById('logsList');
+
+  if(logs.length === 0){
+    list.innerHTML = '<div class="empty-state"><div class="empty-icon">📝</div><div class="empty-text">目前沒有系統日誌</div></div>';
+    return;
+  }
+
+  list.innerHTML = logs.slice(-50).reverse().map(log => {
+    const time = new Date(log.timestamp).toLocaleString('zh-TW');
+    return `<div style="padding:12px 24px;border-bottom:1px solid var(--border);display:flex;gap:16px;font-size:0.86rem;">
+      <div style="color:var(--text3);min-width:160px;flex-shrink:0;">${time}</div>
+      <div style="font-weight:600;min-width:100px;">${log.action}</div>
+      <div style="color:var(--accent);">${log.user}</div>
+    </div>`;
+  }).join('');
 }
 
-function deleteAccount(idx){
-  const accts=getAccounts();const email=accts[idx].email;const name=accts[idx].name;
-  if(!confirm('確定刪除帳號「'+name+'」？'))return;
-  accts.splice(idx,1);localStorage.setItem('pc_users',JSON.stringify(accts));
-  const blocked=JSON.parse(localStorage.getItem('pc_blocked_emails')||'[]');
-  if(!blocked.includes(email))blocked.push(email);
-  localStorage.setItem('pc_blocked_emails',JSON.stringify(blocked));
-  showToast('已刪除並封鎖 '+name);renderAll();
+function blockUser(email){
+  if(confirm('確定要停用此帳號？用戶將無法登入。')){
+    const blocked = JSON.parse(localStorage.getItem('pc_blocked_emails') || '[]');
+    if(!blocked.includes(email)){
+      blocked.push(email);
+      localStorage.setItem('pc_blocked_emails', JSON.stringify(blocked));
+      showToast('✓ 已停用帳號');
+      renderUsers();
+    }
+  }
 }
 
-function unblockEmail(email){
-  const blocked=JSON.parse(localStorage.getItem('pc_blocked_emails')||'[]');
-  localStorage.setItem('pc_blocked_emails',JSON.stringify(blocked.filter(e=>e!==email)));
-  showToast('已解除封鎖 '+email);renderAll();
+function unblockUser(email){
+  const blocked = JSON.parse(localStorage.getItem('pc_blocked_emails') || '[]');
+  const updated = blocked.filter(e => e !== email);
+  localStorage.setItem('pc_blocked_emails', JSON.stringify(updated));
+  showToast('✓ 已解除停用');
+  renderUsers();
 }
 
-function clearLogs(){ if(!confirm('確定清除所有活動日誌？'))return;localStorage.removeItem('pc_activity_log');showToast('日誌已清除');renderAll(); }
-function showToast(msg){ const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2500); }
-setInterval(()=>{if(sessionStorage.getItem('pc_admin_auth')==='1')renderAll();},30000);
+function viewEvent(eventId, ownerEmail){
+  window.open('event.html?id=' + eventId, '_blank');
+}
+
+function removeBlockRecord(eventId, email){
+  if(confirm('確定要移除此封鎖記錄？')){
+    const key = 'pc_blocked__' + eventId;
+    const blocked = JSON.parse(localStorage.getItem(key) || '[]');
+    const updated = blocked.filter(b => b.email !== email);
+    localStorage.setItem(key, JSON.stringify(updated));
+    showToast('✓ 已移除封鎖記錄');
+    renderBlocked();
+  }
+}
+
+function filterUsers(){
+  const search = document.getElementById('userSearch').value.toLowerCase();
+  const rows = document.querySelectorAll('#usersList tr');
+  rows.forEach(row => {
+    const text = row.textContent.toLowerCase();
+    row.style.display = text.includes(search) ? '' : 'none';
+  });
+}
+
+function filterEvents(){
+  const search = document.getElementById('eventSearch').value.toLowerCase();
+  const rows = document.querySelectorAll('#eventsList tr');
+  rows.forEach(row => {
+    const text = row.textContent.toLowerCase();
+    row.style.display = text.includes(search) ? '' : 'none';
+  });
+}
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
 </script>
-</body></html>
+</body>
+</html>
